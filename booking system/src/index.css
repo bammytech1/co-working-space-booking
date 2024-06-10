@@ -28,3 +28,20 @@ body {
 #booking-info {
   margin-top: 20px;
 }
+
+.dashboard {
+  margin-top: 30px;
+}
+
+.dashboard h2 {
+  margin-bottom: 10px;
+}
+
+.dashboard ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.dashboard li {
+  margin: 5px 0;
+}

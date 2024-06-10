@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import Dashboard from "./Dashboard";
 
 const desksInitialState = Array(15)
   .fill({ booked: false, type: "individual" })
@@ -19,6 +20,7 @@ const discountRate = 0.1;
 const Desk = () => {
   const [desks, setDesks] = useState(desksInitialState);
   const [totalCharge, setTotalCharge] = useState(0);
+  const [bookings, setBookings] = useState([]);
 
   const bookDesk = (index) => {
     if (desks[index].booked) {
@@ -46,22 +48,32 @@ const Desk = () => {
       const updatedDesks = [...desks];
       updatedDesks[index].booked = true;
       setDesks(updatedDesks);
+
+      setBookings([...bookings, { membershipTier, total }]);
     } else {
       alert("Invalid input. Please try again.");
     }
   };
 
   return (
-    <div id="desks-container">
-      {desks.map((desk, index) => (
-        <div
-          key={index}
-          className={`desk ${desk.booked ? "booked" : ""}`}
-          onClick={() => bookDesk(index)}
-        >
-          {desk.type === "individual" ? "Individual" : "Team"}
-        </div>
-      ))}
+    <div>
+      <div id="desks-container">
+        {desks.map((desk, index) => (
+          <div
+            key={index}
+            className={`desk ${desk.booked ? "booked" : ""}`}
+            onClick={() => bookDesk(index)}
+          >
+            {desk.type === "individual" ? "Individual" : "Team"}
+          </div>
+        ))}
+      </div>
+      <div id="booking-info">
+        <p>
+          Total Charge: <span id="total-charge">${totalCharge}</span>
+        </p>
+      </div>
+      <Dashboard bookings={bookings} />
     </div>
   );
 };
